@@ -8,7 +8,7 @@ export const RESOURCE_INFO: Record<ResourceId, { label: string; icon: string; co
   crystal: { label: 'Kristall', icon: '✧', color: 0xc5a2ff },
   parts: { label: 'Komponenten', icon: '▦', color: 0x69e7c2 }
 };
-export interface ModuleDef { id: string; name: string; icon: string; description: string; cost: Partial<ResourceBag>; mass: number; power: number; generation: number; range: number; recipe?: { input: Partial<ResourceBag>; output: Partial<ResourceBag>; seconds: number }; }
+export interface ModuleDef { id: string; name: string; icon: string; description: string; cost: Partial<ResourceBag>; mass: number; power: number; generation: number; range?: number; recipe?: { input: Partial<ResourceBag>; output: Partial<ResourceBag>; seconds: number }; }
 export const MODULES: ModuleDef[] = [
  { id:'core', name:'Schiffskern', icon:'⬡', description:'Zentrale Steuereinheit', cost:{}, mass:10, power:0, generation:4 },
  { id:'cargo', name:'Frachtraum', icon:'▤', description:'+25 Ladekapazität', cost:{iron:5, rock:4}, mass:5, power:0, generation:0 },
