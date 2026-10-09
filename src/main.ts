@@ -18,7 +18,6 @@ class SpaceScene extends Phaser.Scene {
     this.shipBody=this.add.graphics();this.ship=this.add.container(this.scale.width/2,this.scale.height/2,[this.shipBody]);this.drawShip();
     this.keys=this.input.keyboard!.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT,SPACE,E,B,ESC') as Record<string,Phaser.Input.Keyboard.Key>;
     this.scale.on('resize',()=>this.ship.setPosition(this.scale.width/2,this.scale.height/2));
-    this.input.keyboard!.on('keydown-ESC',()=>togglePause());
     this.input.keyboard!.on('keydown-E',()=>this.collectNearest());
     this.input.keyboard!.on('keydown-B',()=>toggleBuild());
     this.input.keyboard!.on('keydown-SPACE',()=>{if(!paused&&gameStarted)this.boost=1.1;});
