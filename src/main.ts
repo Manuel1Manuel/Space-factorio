@@ -29,7 +29,7 @@ class SpaceScene extends Phaser.Scene {
     const dt=Math.min(deltaMs/1000,0.05);if(paused||!gameStarted)return;this.elapsed+=dt;
     const accelerating=this.keys.W.isDown||this.keys.UP.isDown, braking=this.keys.S.isDown||this.keys.DOWN.isDown;
     if(this.keys.A.isDown||this.keys.LEFT.isDown)this.angle-=2.45*dt;if(this.keys.D.isDown||this.keys.RIGHT.isDown)this.angle+=2.45*dt;
-    const accel=this.factory.modules.some(m=>m.type==='engine')?95:65;
+    const accel=factory.modules.some(m=>m.type==='engine')?95:65;
     this.speed=Phaser.Math.Clamp(this.speed+(accelerating?accel:0)*dt-(braking?120:0)*dt-(accelerating?0:12*dt),0,320);
     if(this.boost>0){this.speed=Math.min(390,this.speed+190*dt);this.boost=Math.max(0,this.boost-dt);}
     const sector=SECTORS[sectorIndex];this.distance+=this.speed*dt/22;
@@ -38,11 +38,11 @@ class SpaceScene extends Phaser.Scene {
     this.spawnClock+=dt;if(this.spawnClock>=interval&&this.fragments.length<115){this.spawnClock=0;this.spawnFragment();}
     const fx=Math.cos(this.angle),fy=Math.sin(this.angle);
     for(let i=this.fragments.length-1;i>=0;i--){const f=this.fragments[i];f.data.x+=(-fx*this.speed*0.9+f.data.vx)*dt;f.data.y+=(-fy*this.speed*0.9+f.data.vy)*dt;f.data.rotation+=f.data.spin*dt;f.shape.setPosition(f.data.x,f.data.y).setRotation(f.data.rotation);
-      if(Math.hypot(f.data.x-this.ship.x,f.data.y-this.ship.y)<f.data.size+15){if(this.factory.modules.some(m=>m.type==='collector')&&this.factory.energy>0){this.pickup(f.data);this.fragments.splice(i,1);f.shape.destroy();continue;}}
+      if(Math.hypot(f.data.x-this.ship.x,f.data.y-this.ship.y)<f.data.size+15){if(factory.modules.some(m=>m.type==='collector')&&factory.energy>0){this.pickup(f.data);this.fragments.splice(i,1);f.shape.destroy();continue;}}
       if(f.data.x < -100||f.data.x>this.scale.width+100||f.data.y < -100||f.data.y>this.scale.height+100){f.shape.destroy();this.fragments.splice(i,1);}
     }
     for(const star of this.stars){star.x-=fx*this.speed*0.07*dt;star.y-=fy*this.speed*0.07*dt;if(star.x<0)star.x=this.scale.width;if(star.x>this.scale.width)star.x=0;if(star.y<0)star.y=this.scale.height;if(star.y>this.scale.height)star.y=0;}
-    if(this.factory.modules.some(m=>m.type==='collector'))this.factory.energy=Math.max(0,this.factory.energy-0.7*dt);
+    if(factory.modules.some(m=>m.type==='collector'))factory.energy=Math.max(0,factory.energy-0.7*dt);
     factory.tick(dt,inventory,toast);
     this.ship.setRotation(this.angle+Math.PI/2);
     updateHud(this);
